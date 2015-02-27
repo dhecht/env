@@ -11,12 +11,28 @@ function impala {
   pushd ~/src/Impala && export IMPALA_HOME= && source bin/impala-config.sh
 }
 
-# until reboot...
-export JAVA_HOME="/usr/lib/jvm/java-7-oracle"
-
+# Mount toolchain
+source /opt/toolchain/toolchain.sh
+# set Impala Home
+export IMPALA_HOME=/data/Impala
+# Set the JAVA_HOME to something reasonable
+export JAVA_HOME=$JAVA7_HOME
+export JAVA64_HOME=$JAVA7_HOME
+export PATH=$JAVA_HOME/bin:$PATH
+export LD_LIBRARY_PATH=""
+export LD_PRELOAD=""
+# User specific aliases and functions
 export HADOOP_LZO=~/src/hadoop-lzo
 export IMPALA_LZO=~/src/Impala-lzo
 export IMPALA_AUX_TEST_HOME=~/src/Impala-auxiliary-tests
+
+export S3_BUCKET="dhecht-impala-s3"
+export TARGET_FILESYSTEM="s3"
+export FILESYSTEM_PREFIX="s3a://${S3_BUCKET}"
+export AWS_ACCESS_KEY_ID=".."
+export AWS_SECRET_ACCESS_KEY=".."
+
+# source $IMPALA_HOME/bin/impala-config.sh &> /dev/null
 
 export IMPALA_BUILD_THREADS=16
 

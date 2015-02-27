@@ -1,0 +1,33 @@
+[core]
+	editor = emacs -nw
+	excludesfile = /home/dhecht/.gitignore
+[user]
+	name = Dan Hecht
+	email = dhecht@cloudera.com
+
+
+[difftool "ediff"]
+ 	cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+[difftool "ediffclient"]
+	cmd = emacsclient --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+
+#[diff]
+#        tool = ediff
+#        guitool = ediff
+#
+#[difftool "ediff"]
+#        cmd = ~/bin/ediff.sh $LOCAL $REMOTE $MERGED
+#
+#[merge]
+#        tool = ediff
+#
+#[mergetool "ediff"]
+#        cmd = ~/bin/ediff.sh $LOCAL $REMOTE $MERGED $BASE
+#        trustExitCode = true
+[alias]
+	ediff = difftool --tool=ediff
+        l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
+        ll = !git l --all
+        tree = log --graph --simplify-by-decoration --pretty=format:'%d' --all
+[color]
+	ui = true

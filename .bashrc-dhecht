@@ -1,0 +1,25 @@
+
+ulimit -c unlimited
+
+alias e='emacs -nw'
+alias grep='grep --color=always'
+alias less='less -r'
+alias gvm=../Impala-auxiliary-tests/jenkins/gerrit-verify-merge.sh
+alias spb=../Impala-auxiliary-tests/jenkins/submit_private_build.py
+
+function impala {
+  pushd ~/src/Impala && export IMPALA_HOME= && source bin/impala-config.sh
+}
+
+# until reboot...
+export JAVA_HOME="/usr/lib/jvm/java-7-oracle"
+
+export HADOOP_LZO=~/src/hadoop-lzo
+export IMPALA_LZO=~/src/Impala-lzo
+export IMPALA_AUX_TEST_HOME=~/src/Impala-auxiliary-tests
+
+export IMPALA_BUILD_THREADS=16
+
+export x1=${IMPALA_HOME}/be/build/debug/service
+export PATH=$PATH:~/bin
+export PATH=/usr/lib/ccache:$PATH

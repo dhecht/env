@@ -1,0 +1,6 @@
+*#
+.#*
+.cproject
+.project
+.attach_pid*
+gdb.txt

@@ -8,7 +8,7 @@ alias gvm=../Impala-auxiliary-tests/jenkins/gerrit-verify-merge.sh
 alias spb=../Impala-auxiliary-tests/jenkins/submit_private_build.py
 
 function impala {
-  pushd ~/src/Impala && export IMPALA_HOME= && source bin/impala-config.sh
+  pushd ~/src/Impala && export IMPALA_HOME= && source bin/impala-config.sh &> /dev/null
 }
 
 # until reboot...

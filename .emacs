@@ -129,3 +129,54 @@
 
 (setq kill-whole-line t)
 (setq-default fill-column 87)
+
+; 4/7/2015
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+
+;; helm
+(add-to-list 'load-path "~/.emacs.d/helm")
+(require 'setup-helm)
+
+;; helm + gtags
+(setq
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key "\C-cg"
+ helm-gtags-suggested-key-mapping t
+ )
+
+(require 'helm-gtags)
+;; Enable helm-gtags-mode
+(add-hook 'dired-mode-hook 'helm-gtags-mode)
+(add-hook 'eshell-mode-hook 'helm-gtags-mode)
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+(add-hook 'java-mode-hook 'helm-gtags-mode)
+
+(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+(define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
+
+;; function-args
+(require 'function-args)
+(fa-config-default)
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(set-default 'semantic-case-fold t)
+
+;(define-key c-mode-map  [(contrl tab)] 'moo-complete)
+;(define-key c++-mode-map  [(control tab)] 'moo-complete)
+;(define-key c-mode-map (kbd "M-o")  'fa-show)
+;(define-key c++-mode-map (kbd "M-o")  'fa-show)
+
+;; company mode
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)

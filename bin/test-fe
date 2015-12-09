@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# -Dtest=ClassName
+# -Dtest=ClassName#testCase
+# logging: /tmp/UNKNOWN.INFO
+
+pushd $IMPALA_HOME/fe
+time mvn test $@
+popd

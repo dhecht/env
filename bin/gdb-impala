@@ -1,0 +1,2 @@
+#!/bin/bash
+gdb $IMPALA_HOME/be/build/debug/service/impalad $*

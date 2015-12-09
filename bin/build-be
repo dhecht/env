@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. $IMPALA_HOME/bin/impala-config.sh
+
+time $IMPALA_HOME/bin/make_impala.sh -notests $@

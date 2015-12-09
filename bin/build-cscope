@@ -1,0 +1,23 @@
+#!/bin/bash
+
+GENFILES=1
+
+for ARG in $*
+do
+  case "$ARG" in
+    -genfiles)
+      GENFILES=1
+      ;;
+esac
+done
+
+pushd $IMPALA_HOME
+
+if [ $GENFILES -eq 1 ]; then
+    echo "Generating file list..."
+    ./bin/gen-cscope.sh
+fi
+echo "Generating cscope index..."
+cscope -b -q
+
+popd

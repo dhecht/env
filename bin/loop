@@ -1,0 +1,10 @@
+#!/bin/bash
+
+i=0
+echo "Running $@..."
+while [ $? -eq 0 ]
+do
+    i=$((i + 1))
+    echo "Iteration $i..."
+    "$@"
+done

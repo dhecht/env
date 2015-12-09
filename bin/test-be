@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# http://www.cmake.org/cmake/help/v2.8.8/ctest.html
+# -R expr-test
+
+. ${IMPALA_HOME}/bin/set-classpath.sh
+a="$@"
+pushd $IMPALA_HOME/be
+time make ARGS="$a" test
+popd

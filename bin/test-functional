@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd $IMPALA_HOME/tests
+py.test $@
+popd

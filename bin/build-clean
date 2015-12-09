@@ -1,0 +1,3 @@
+./buildall.sh -notests -skiptests
+./testdata/bin/run-all.sh
+start-impala-cluster.py

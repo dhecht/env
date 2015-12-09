@@ -1,0 +1,37 @@
+#!/bin/bash
+
+. $IMPALA_HOME/bin/impala-config.sh
+
+CLEAN=0
+
+for ARG in $*
+do
+  case "$ARG" in
+    -clean)
+      CLEAN=1
+      ;;
+     *)
+      echo "Bad option $ARG"
+      exit 1;
+      ;;
+esac
+done
+
+pushd $IMPALA_HOME/fe
+
+if [ $CLEAN -eq 1 ]; then
+  echo "Cleaning frontend..."
+  # clean fe
+  # don't use git clean because we need to retain Eclipse conf files
+  cd $IMPALA_FE_DIR
+  rm -rf target
+  rm -f src/test/resources/{core,hbase,hive}-site.xml
+  rm -rf generated-sources/*
+  rm -rf ${IMPALA_TEST_CLUSTER_LOG_DIR}/*
+fi
+
+echo "Building frontend..."
+# Not in CDH5
+#mvn dependency:copy-dependencies
+time mvn package -DskipTests=true
+popd

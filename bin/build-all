@@ -1,0 +1,34 @@
+#!/bin/bash
+
+NOCLEAN="-noclean"
+SKIPTESTS="-skiptests"
+SNAPSHOT=""
+METASNAPSHOT=""
+
+for ARG in $*
+do
+  case "$ARG" in
+      -clean|--clean)
+	  NOCLEAN=""
+	  echo "Doing clean build..."
+	  ;;
+      -test|--test)
+	  SKIPTESTS=""
+	  echo "Running tests..."
+	  ;;
+      *)
+	  SNAPSHOT="-snapshot_file ../Impala-auxiliary-tests/test-warehouse-cdh5-${ARG}-SNAPSHOT.tar.gz"
+	  METASNAPSHOT="-metastore_snapshot_file ../Impala-auxiliary-tests/hive_impala_dump_cdh5-${ARG}.txt"
+	  SKIPTESTS=""
+	  echo "Using snapshot ${ARG}..."
+	  ;;
+      -help)
+	  echo "Invalid arg"
+	  exit 1
+	  ;;
+   esac
+done
+
+pushd $IMPALA_HOME
+time ./buildall.sh $NOCLEAN $SKIPTESTS $SNAPSHOT $METASNAPSHOT
+popd

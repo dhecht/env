@@ -2,24 +2,44 @@
 ulimit -c unlimited
 
 alias e='emacs -nw'
-alias grep='grep --color=always'
+alias g='grep --color=always'
 alias less='less -r'
-alias gvm=../Impala-auxiliary-tests/jenkins/gerrit-verify-merge.sh
+#alias gvm=../Impala-auxiliary-tests/jenkins/gerrit-verify-merge.sh
+alias gvo=../Impala-auxiliary-tests/jenkins/gerrit-verify-only.sh
 alias spb=../Impala-auxiliary-tests/jenkins/submit_private_build.py
 
 function impala {
-  pushd ~/src/Impala && export IMPALA_HOME= && source bin/impala-config.sh &> /dev/null
+  pushd ~/src/Impala && export IMPALA_HOME= && source bin/impala-config.sh
 }
 
 # until reboot...
-export JAVA_HOME="/usr/lib/jvm/java-7-oracle"
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 
 export HADOOP_LZO=~/src/hadoop-lzo
 export IMPALA_LZO=~/src/Impala-lzo
 export IMPALA_AUX_TEST_HOME=~/src/Impala-auxiliary-tests
+export IMPALA_TOOLCHAIN=~/toolchain
 
 export IMPALA_BUILD_THREADS=16
 
 export x1=${IMPALA_HOME}/be/build/debug/service
 export PATH=$PATH:~/bin
-export PATH=/usr/lib/ccache:$PATH
+#Impala build now uses ccaach automatically
+#export PATH=/usr/lib/ccache:$PATH
+
+export DOWNLOAD_CDH_COMPONENTS=true
+
+export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+
+branch-trunk() {
+  git fetch gerrit && git checkout -b $1 gerrit/cdh5-trunk
+}
+branch-master() {
+  git fetch asf && git checkout -b $1 asf/master
+}
+alias "rebase-trunk"="git fetch gerrit && git rebase -i gerrit/cdh5-trunk"
+alias "rebase-master"="git fetch asf && git rebase -i asf/master"
+
+core_pattern() {
+  sudo echo "/coredump/core.%p" > /proc/sys/kernel/core_pattern
+}

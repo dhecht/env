@@ -180,3 +180,18 @@
 ;; company mode
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
+(add-to-list 'company-backends 'company-c-headers)
+
+;; projectile
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+;;(helm-projectile-on)
+
+;; gdb
+(setq
+ ;; use gdb-many-windows by default
+ gdb-many-windows t
+
+ ;; Non-nil means display source file containing the main routine at startup
+ gdb-show-main t
+ )

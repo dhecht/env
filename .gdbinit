@@ -13,8 +13,6 @@ set print array on
 set logging on
 #set logging file your-gdb-logfile.log
  
-handle SIGSEGV nostop noprint pass
-
 # STL pretty printers
 python
 import sys
@@ -22,3 +20,19 @@ sys.path.insert(0, '/home/dhecht/env/gdb/python')
 from libstdcxx.v6.printers import register_libstdcxx_printers
 register_libstdcxx_printers (None)
 end
+
+#handle SIGSEGV nostop noprint pass
+
+# So functions can be called
+define hook-stop
+  handle SIGSEGV stop print pass
+end
+define hook-run
+  handle SIGSEGV nostop noprint pass
+end
+define hook-continue
+  handle SIGSEGV nostop noprint pass
+end
+
+#source /home/dhecht/env/gdb/python/lwp_to_id.py
+
